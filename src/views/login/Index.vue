@@ -3,7 +3,7 @@
 		<div class="login-container">
 			<div class="login-welcome clearfix">
 				<div aria-label="风行无障碍演示" class="welcome-text fl-l">风行无障碍演示</div>
-				<img class="welcome-login fl-r" src="@/assets/images/img/logo-login.png" alt="">
+				<img class="welcome-login fl-r" src="@/assets/images/img/logo-login.png" alt="一张图片, 描述一个人在浏览网页">
 			</div>
 			<div class="login-form">
 				<van-cell-group class="login-cell-group" :border="false">
@@ -19,6 +19,7 @@
 							class="login-cell-icon"
 							slot="left-icon"
 							src="@/assets/images/icon/icon-netname.png"
+							alt="网址图标"
 						>
 						<van-icon
 							v-show="netAddressClearBtnVisible"
@@ -37,7 +38,12 @@
 						autocomplete="off"
 						:error-message="errorMessage.urserName"
 						@keyup.enter.native="onKeyupInput('urserName')">
-						<img class="login-cell-icon" slot="left-icon" src="@/assets/images/icon/icon-ursename.png">
+						<img
+							class="login-cell-icon"
+							slot="left-icon"
+							src="@/assets/images/icon/icon-ursename.png"
+							alt="账号图标"
+						>
 					</van-field>
 					<van-field
 						v-model="password"
@@ -52,7 +58,7 @@
 							class="login-cell-icon"
 							slot="left-icon"
 							src="@/assets/images/icon/icon-password.png"
-							alt="一张图片, 描述一个人在浏览网页"
+							alt="密码图标"
 						>
 						<van-icon
 							slot="right-icon"
