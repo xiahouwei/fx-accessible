@@ -2,88 +2,19 @@
 	<w-app-page class="inteledi-login">
 		<div class="login-container">
 			<div class="login-welcome clearfix">
-				<div aria-label="风行无障碍演示" class="welcome-text fl-l">风行无障碍演示</div>
+				<div aria-label="风行无障碍演示" class="welcome-text fl-l">欢迎进入项目</div>
 				<img class="welcome-login fl-r" src="@/assets/images/img/logo-login.png" alt="">
 			</div>
-			<div class="login-form">
-				<van-cell-group class="login-cell-group" :border="false">
-					<van-field
-						v-model="netAddress"
-						ref="netAddress"
-						class="login-cell"
-						placeholder="请输入网址"
-						aria-label="请输入你的网址"
-						:error-message="errorMessage.netAddress"
-						@keyup.enter.native="onKeyupInput('netAddress')">
-						<img
-							class="login-cell-icon"
-							slot="left-icon"
-							src="@/assets/images/icon/icon-netname.png"
-						>
-						<van-icon
-							v-show="netAddressClearBtnVisible"
-							slot="right-icon"
-							name="close"
-							class="login-cell-right-icon"
-							@click="netAddressClear"
-						/>
-					</van-field>
-					<van-field
-						v-model="urserName"
-						ref="urserName"
-						class="login-cell"
-						placeholder="请输入账号"
-						aria-label="请输入你的账号"
-						autocomplete="off"
-						:error-message="errorMessage.urserName"
-						@keyup.enter.native="onKeyupInput('urserName')">
-						<img class="login-cell-icon" slot="left-icon" src="@/assets/images/icon/icon-ursename.png">
-					</van-field>
-					<van-field
-						v-model="password"
-						ref="password"
-						class="login-cell"
-						placeholder="请输入密码"
-						aria-label="请输入你的密码"
-						:type="passwordType"
-						:error-message="errorMessage.password"
-						@keyup.enter.native="onKeyupInput('password')">
-						<img
-							class="login-cell-icon"
-							slot="left-icon"
-							src="@/assets/images/icon/icon-password.png"
-							alt="一张图片, 描述一个人在浏览网页"
-						>
-						<van-icon
-							slot="right-icon"
-							:name="passwordWatchBtn"
-							class="login-cell-right-icon"
-							aria-label="显示密码按钮"
-							@click="passwordWatchClick"
-						/>
-					</van-field>
-				</van-cell-group>
-				<van-button
-					class="login-btn"
-					type="primary"
-					round
-					aria-label="这是登录按钮"
-					@click="loginHanle"
-				>登录</van-button>
-			</div>
-		</div>
-		<div class="login-bottom">
-			<div aria-label="当前版本1.0.0" class="version">version:{{appSubjectVersion}}</div>
+            <div class="container-text">在Web开发无障碍性意味着使尽可能多的人能够使用Web站点,即使这些人的能力是有限的。</div>
+            <div class="container-text">网络从根本上是为了为所有的人工作, 无论他们的硬件、软件、语言、文化、位置或身体或精神能力</div>
 		</div>
 	</w-app-page>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import mixinAuth from '@/js/mixin/auth'
 export default {
-	name: 'login',
-	mixins: [mixinAuth],
+	name: 'accessible',
 	data () {
 		return {
 			formFieldRef: ['netAddress', 'urserName', 'password'],
@@ -149,7 +80,7 @@ export default {
 			}
 		},
 		loginHanle () {
-			this.$router.push('/accessible')
+			this.$router.push('/main/accessible')
 		},
 		loginPost () {
 			this.$store.commit({
@@ -298,5 +229,9 @@ export default {
 		transform: scaleY(0.5);
 		border-bottom: 1px solid #d9d9d9
 	}
+    .container-text {
+        font-size: 14px;
+        margin-bottom: 20px
+    }
 }
 </style>

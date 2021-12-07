@@ -9,6 +9,10 @@ export default [
 		name: 'login',
 		component: () => import(/* webpackChunkName: "login" */'@/views/login/Index.vue')
 	}, {
+		path: '/accessible',
+		name: 'accessible',
+		component: () => import(/* webpackChunkName: "login" */'@/views/accessible/Index.vue')
+	}, {
 		path: '/main',
 		component: () => import(/* webpackChunkName: "main" */'@/views/main/Index.vue'),
 		children: [
