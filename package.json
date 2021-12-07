@@ -1,0 +1,40 @@
+{
+	"name": "intelligent",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"serve": "vue-cli-service serve --open",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint",
+		"serve-mock": "vue-cli-service serve --open --mode mock",
+		"shw": "cross-env PROXY_TARGET=SHW npm run serve",
+		"zyq": "cross-env PROXY_TARGET=ZYQ npm run serve"
+	},
+	"dependencies": {
+		"axios": "^0.18.0",
+		"babel-plugin-import": "^1.8.0",
+		"core-js": "^2.6.5",
+		"postcss-px-to-viewport": "^1.0.0",
+		"postcss-write-svg": "^3.0.1",
+		"vant": "^1.6.1",
+		"vconsole": "^3.3.4",
+		"vue": "^2.6.6",
+		"vue-router": "^3.0.1",
+		"vuex": "^3.0.1"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "^3.5.0",
+		"@vue/cli-plugin-eslint": "^3.5.0",
+		"@vue/cli-service": "^3.5.0",
+		"@vue/eslint-config-standard": "^4.0.0",
+		"babel-eslint": "^10.0.1",
+		"cross-env": "^7.0.3",
+		"eslint": "^5.8.0",
+		"eslint-plugin-vue": "^5.0.0",
+		"less": "^3.9.0",
+		"less-loader": "^4.1.0",
+		"stylus": "^0.54.5",
+		"stylus-loader": "^3.0.2",
+		"vue-template-compiler": "^2.5.21"
+	}
+}

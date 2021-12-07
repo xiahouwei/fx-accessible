@@ -1,0 +1,159 @@
+@import './varsty'
+/*native*/
+/*禁止选中*/
+body{
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
+/*公共样式*/
+.fl-r {
+	float:right
+}
+.fl-l {
+	float:left
+}
+a{
+	cursor: pointer
+}
+/*清浮动*/
+.clearfix:after{
+	content:""
+	height:0
+	line-height:0
+	display:block
+	clear:both
+	visibility:hidden
+}
+.fx-price-font {
+	color:$fxPrice
+}
+.fx-default-font {
+	color:$fxDefaultColor
+}
+.fx-warn-font {
+	color:$fxRed
+}
+.fx-green-font {
+	color:$fxGreen
+}
+/*阴影块*/
+.fx-shadow-block {
+	box-shadow:2px -2px 5px #eee
+	border:1px solid #eee
+	border-radius:5px
+}
+/*通用阴影-down*/
+.fx-shadow-down {
+	box-shadow:2px -2px 6px $fxBorder
+}
+/*通用阴影-up*/
+.fx-shadow-up {
+	box-shadow:0px -2px 2px $fxBorder
+}
+/*省略号*/
+.fx-ellipsis {
+	overflow:hidden
+	text-overflow : ellipsis
+	white-space:nowrap
+}
+/*待办标记*/
+.fx-red-dot {
+	&:after {
+		top: 0;
+		right: 5px
+		width: 10px
+		height: 10px
+		content: ' ';
+		position: absolute;
+		border-radius: 100%;
+		background-color: #f44;
+	}
+}
+/*边框无圆角*/
+.fx-no-radius {
+	border-radius:0 !important
+}
+/*pop列表 300宽*/
+.fx-list-popup-300 {
+	height:100%
+	width:300px
+}
+/*pop列表 100%宽*/
+.fx-list-popup-full {
+	height:100%
+	width:100%
+}
+/*伪按钮*/
+.fx-Pseudo-btn {
+	&::after {
+		background-color: #ccc;
+		content: " ";
+		opacity: 0;
+		position: absolute;
+		top:0;
+		bottom:0;
+		left:0;
+		right:0;
+	}
+	&:active::after {
+		opacity: .4;
+	}
+}
+/*蓝色竖线小标题*/
+.fx-block-title::before {
+  width: 3px
+  height: 15px
+  content: ''
+  display: inline-block
+  vertical-align: text-top
+  margin-right: 5px
+  background-color: #538FFD
+}
+/*{{{单据样式*/
+/*vant cell样式*/
+.fx-van-cell {
+	$fx-dynamic-font-size(14px)
+}
+/*单据信息cell样式*/
+.fx-btn {
+	$fx-dynamic-font-size(14px)
+}
+.fx-info-tab {
+	.van-ellipsis{
+		$fx-dynamic-font-size(12px, 1)
+	}
+}
+.fx-info-item {
+	$fx-dynamic-font-size(12px)
+	padding: 5px 0
+}
+.fx-info-title {
+	$fx-dynamic-font-size(12px)
+}
+.fx-title {
+	$fx-dynamic-font-size(12px)
+}
+.fx-small-title {
+	$fx-dynamic-font-size(10px)
+}
+.fx-unit {
+	$fx-dynamic-font-size(13px)
+}
+.fx-item-delete {
+	$fx-dynamic-font-size(15px)
+	justify-content: center
+	display: flex
+	flex-direction: column
+	background-color: $fxRed
+	color: $fxWhite
+	text-align: center
+	height: 100%
+	width: 80px
+}
+// 主页面筛选字体样式，除最小，其他按统一字体大小设置
+.fx-big-size {
+	font-size: 19px !important
+}
+/*}}}*/

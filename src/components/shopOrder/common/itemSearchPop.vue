@@ -1,0 +1,326 @@
+<template>
+	<div class="item-search-block">
+		<w-header title="搜索品项" :leftOptions="leftOptions" @on-click-back="onCloseClick"></w-header>
+		<searchHead :initSearch="visibleFlag" :searchKey.sync="searchKey" :selectActive="isSelectAll" @on-select-click="onSelectAllClick"></searchHead>
+		<div class="item-list" ref="details-content">
+			<van-collapse v-model="activeStoreNames" :border="false">
+				<van-collapse-item :name="storeItem.id"
+					v-for="storeItem in data"
+					:key="storeItem.id"
+					class="store-row"
+					v-show="$fxCommon.storeFilter(storeItem, searchKey)"
+				>
+					<div slot="title" class="item-store-title fx-title fx-ellipsis">{{storeItem.name}}</div>
+					<van-swipe-cell
+						v-for="(item, index) in $fxCommon.detailFilter(storeItem.details, searchKey)"
+						:ref="`details-row-${storeItem.id}-${item.goodsDTO.id}`"
+						:key="`${storeItem.id}-${item.goodsDTO.id}`"
+						:right-width="80"
+						:disabled="isDisabled || focusing"
+						class="item-row"
+					>
+						<div class="item-cell">
+							<checkBox
+								:visibleFlag="!isDisabled"
+								:checked="item.checked"
+								class="search-checkbox"
+								@on-checkbox-click="onCheckBoxClick(item)"
+							></checkBox>
+							<itemInfoCell
+								:itemData="item"
+								:isDisabled="isDisabled"
+								:disabledEditBtn="focusing"
+								@on-item-edit="onSearchItemEdit"
+								@on-item-focus="onItemFocus(arguments, `${storeItem.id}-${item.goodsDTO.id}`)"
+								@on-item-blur="onItemBlur"
+								class="search-info"
+							></itemInfoCell>
+						</div>
+						<div slot="right" class="item-row-delete fx-item-delete" @click="onDeleteClick(item, index, storeItem.details)">删除</div>
+					</van-swipe-cell>
+				</van-collapse-item>
+			</van-collapse>
+		</div>
+		<div class="search-bottom">
+			<van-button
+				v-show="!isDisabled"
+				class="bottom-btn fx-no-radius fx-btn"
+				type="primary"
+				@click="onSearchConfirm"
+			>保存</van-button>
+			<van-button
+				v-show="!isDisabled"
+				class="bottom-btn fx-no-radius fx-btn"
+				type="danger"
+				@click="onSelectConfirm"
+			>删除</van-button>
+		</div>
+		<van-popup
+			v-model="itemRowEditPopShow"
+			position="right"
+			class="fx-list-popup-full"
+			:close-on-click-overlay="false"
+			:lock-scroll="false"
+		>
+			<itemRowEditPop
+				:visibleFlag.sync="itemRowEditPopShow"
+				:itemData="itemEditRowData"
+				:isDisabled="isDisabled"
+				@on-Confirm="onEditRowConfirm"
+			></itemRowEditPop>
+		</van-popup>
+	</div>
+</template>
+
+<script>
+import itemInfoCell from '@/components/shopOrder/common/ItemInfoCell.vue'
+import itemRowEditPop from '@/components/shopOrder/common/ItemRowEditPop.vue'
+import checkBox from '@/components/common/CheckBox.vue'
+import searchHead from '@/components/common/searchHead.vue'
+export default {
+	name: 'itemSearchPop',
+	components: {
+		itemInfoCell,
+		itemRowEditPop,
+		checkBox,
+		searchHead
+	},
+	props: {
+		data: {
+			type: Array,
+			default: () => {
+				return []
+			}
+		},
+		isDisabled: Boolean,
+		visibleFlag: Boolean
+	},
+	data () {
+		return {
+			focusing: false,
+			leftOptions: {
+				showBackBtn: true,
+				preventGoBack: true
+			},
+			searchKey: '',
+			itemRowEditPopShow: false,
+			itemEditRowData: {},
+			activeStoreNames: [],
+			active: false
+		}
+	},
+	watch: {
+		visibleFlag: {
+			handler (val) {
+				if (val) {
+					this.searchKey = ''
+					// 展开折叠
+					this.data.forEach(storeItem => {
+						let hasDetails = storeItem.details.filter(item => {
+							return item.changeType !== 'del'
+						}).length
+						if (hasDetails > 0) {
+							this.activeStoreNames.push(storeItem.id)
+						}
+					})
+				}
+			},
+			immediate: true
+		}
+	},
+	computed: {
+		isSelectAll () {
+			// 单据下发称重或者单据审核全选按钮隐藏
+			if (this.isDisabled) {
+				return ''
+			}
+			let selectItemL = 0
+			let dataL = 0
+			this.data.forEach(storeItem => {
+				let searchItems = this.$fxCommon.detailFilter(storeItem.details, this.searchKey)
+				selectItemL += searchItems.filter(item => {
+					return item.changeType !== 'del' && item.checked
+				}).length
+				dataL += searchItems.length
+			})
+			if (selectItemL === 0) {
+				return false
+			} else if (selectItemL === dataL) {
+				return true
+			} else {
+				return false
+			}
+		}
+	},
+	methods: {
+		onCloseClick () {
+			if (this.focusing) { // input不符合验证规则
+				return false
+			}
+			this.$emit('update:visibleFlag', false)
+		},
+		onDeleteClick (item, index, details) {
+			if (item.id) {
+				this.$set(item, 'changeType', 'del')
+			} else {
+				details.splice(index, 1)
+			}
+		},
+		onItemFocus (arg, uuid) {
+			this.focusing = true
+		},
+		onItemBlur () {
+			this.focusing = false
+		},
+		// {{{ 编辑行其他数据
+		onSearchItemEdit (itemData) {
+			this.itemEditRowData = itemData
+			this.itemRowEditPopShow = true
+		},
+		onEditRowConfirm (item) {
+			let storeIndex = this.data.findIndex(storeItem => {
+				return storeItem.id === item.houseDTO.id
+			})
+			if (~storeIndex) {
+				let detailsIndex = this.data[storeIndex].details.findIndex(detailsItem => {
+					return detailsItem.goodsDTO.id === item.goodsDTO.id
+				})
+				if (~detailsIndex) {
+					this.data[storeIndex].details[detailsIndex] = item
+				}
+			}
+		},
+		// }}}
+		onSearchConfirm () {
+			if (this.focusing) { // input不符合验证规则
+				return false
+			}
+			// 去除被选状态
+			this.data.forEach(storeItem => {
+				storeItem.details.forEach(item => {
+					delete item.checked
+				})
+			})
+			this.$emit('on-search-confirm', this.data)
+			this.$emit('update:visibleFlag', false)
+		},
+		// {{{ 删除
+		onCheckBoxClick (item) {
+			if (this.focusing) { // input不符合验证规则
+				return false
+			}
+			this.$set(item, 'checked', !item.checked)
+		},
+		onSelectAllClick () {
+			if (this.focusing) { // input不符合验证规则
+				return false
+			}
+			let flag = !this.isSelectAll
+			this.data.forEach(storeItem => {
+				let searchItem = this.$fxCommon.detailFilter(storeItem.details, this.searchKey)
+				searchItem.forEach(item => {
+					if (item.changeType !== 'del') {
+						this.$set(item, 'checked', flag)
+					}
+				})
+			})
+		},
+		onSelectConfirm () {
+			if (this.focusing) { // input不符合验证规则
+				return false
+			}
+			let checkedItem = this.data.find(storeItem => {
+				return storeItem.details.find(item => {
+					return item.checked && item.changeType !== 'del'
+				})
+			})
+			if (!checkedItem) {
+				this.$fxToast.top('请先选择品项!')
+				return true
+			}
+			this.$dialog.confirm({
+				title: '提示',
+				message: '是否删除？'
+			}).then(() => {
+				this.data.forEach(storeItem => {
+					let details = storeItem.details
+					for (let i = details.length - 1; i >= 0; i--) {
+						let item = details[i]
+						if (!item.checked) {
+							continue
+						}
+						if (item.id) {
+							this.$set(item, 'changeType', 'del')
+						} else {
+							storeItem.details.splice(i, 1)
+						}
+					}
+				})
+			})
+		}
+		// }}}
+	}
+}
+</script>
+<style lang="stylus" scoped>
+@import '~$assets/stylus/varsty.styl'
+@import '~$assets/stylus/extend.styl'
+.item-search-block {
+	height: 100%;
+	background:$fxWhite
+	display: flex
+	flex-direction: column
+	overflow-x: hidden
+	.item-list {
+		flex:1
+		overflow:scroll
+		position: relative
+		text-align: left
+		padding: 0 13px
+		width: 350px
+		.item-store-title {
+			height:40px
+			line-height:40px
+			text-indent:10px
+			background-image:url('~images/icon/wind-ui/icon-house.svg')
+			background-repeat: no-repeat
+			background-position: 0 50%
+			padding-left: 16px
+		}
+		.item-row {
+			border-bottom:1px solid $fxBorder
+			.item-row-delete {
+				background-color:$fxRed
+				color:$fxWhite
+				width: 80px;
+				height: 100%
+				line-height: 80px;
+				display: inline-block;
+				text-align: center;
+			}
+		}
+		.search-checkbox {
+			width: 25px
+		}
+		.item-cell {
+			display: flex
+			flex-flow: row
+			align-items: center
+		}
+		.search-info{
+			flex: 1
+			overflow: hidden
+		}
+	}
+	.search-bottom {
+		width:100%
+		display: flex
+		flex-direction: row
+		.bottom-btn {
+			flex:1
+			padding:0
+			overflow:hidden
+		}
+	}
+}
+</style>

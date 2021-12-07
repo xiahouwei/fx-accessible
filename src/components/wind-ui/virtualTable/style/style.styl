@@ -1,0 +1,175 @@
+@import './varsty.styl'
+.wind-virtual-table__tr {
+	color:virtual-table-tr-color
+	box-sizing:border-box
+	display: flex
+	flex-direction: row
+}
+.wind-virtual-table__td {
+	border-right:1px solid virtual-table-border
+	box-sizing:border-box
+	text-align: center;
+	flex-shrink: 0;
+	white-space: nowrap;
+	overflow:hidden
+	text-overflow : ellipsis
+	white-space:nowrap
+}
+.wind-virtual-table-container {
+	flex:1
+	display: flex
+	flex-direction: column
+	position: relative;
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+	.wind-virtual-table {
+		-webkit-overflow-scrolling: touch
+		flex:1
+		display: flex
+		flex-direction: row
+		position: relative
+		overflow: scroll
+		box-sizing:border-box
+		&::-webkit-scrollbar {
+			display: none
+		}
+		&__left, &__right {
+			display: flex
+			flex-direction: column
+			position: relative
+			overflow: scroll
+			box-sizing:border-box
+			&::-webkit-scrollbar {
+				display: none
+			}
+		}
+		&__left {
+			z-index: 20
+			transition: box-shadow 0.2s ease
+			box-shadow: 0 0 0,2px 0 5px rgba(0, 0, 0, 0.2),0 5px 5px rgba(0, 0, 0, 0.2),0 0 0;
+			.left-body {
+				overflow:hidden
+			}
+		}
+		&__right {
+			flex:1
+		}
+		&__hidden-columns {
+			visibility: hidden
+			display: none
+		}
+		&__title {
+			z-index: 10
+			&-box {
+				@extend .wind-virtual-table__tr
+				border-bottom:1px solid virtual-table-border
+				.wind-virtual-table__th {
+					@extend .wind-virtual-table__td
+					background-color: virtual-table-th-background-color
+					display:flex
+					flex-direction: row
+					overflow: hidden
+					&-label {
+						flex:1
+						overflow: hidden
+					}
+					&-sort {
+						display: flex
+						flex-direction: column
+						width: 20px
+						&-up, &-down {
+							flex:1
+							width:100%
+							height:100%
+							background-repeat:no-repeat
+							background-size: 10px
+						}
+						&-up {
+							background-position: bottom
+							background-image:url('../img/icon-sort-up.png')
+							&.is-active {
+								background-image:url('../img/icon-sort-up-active.png')
+							}
+						}
+						&-down {
+							background-position: top
+							background-image:url('../img/icon-sort-down.png')
+							&.is-active {
+								background-image:url('../img/icon-sort-down-active.png')
+							}
+						}
+					}
+				}
+			}
+		}
+		&__bottom {
+			z-index: 10
+			@extend .wind-virtual-table__tr
+			border-top:1px solid virtual-table-border
+			.wind-virtual-table__sum-td {
+				@extend .wind-virtual-table__td
+				background-color:virtual-table-bottom-background-color
+				color: $fxDefaultColor
+				font-weight: bold
+				font-size:13px
+			}
+		}
+		&__tbody {
+			flex:1
+			position:relative
+			overflow: scroll
+			&::-webkit-scrollbar {
+				display: none
+			}
+			&-phantom {
+				z-index: 1
+			}
+			&-content {
+				position:absolute
+				left:0
+				top:0
+				right:0
+			}
+			.wind-virtual-table__tr {
+				border-bottom:1px solid virtual-table-border
+				&.is-even {
+					background-color:virtual-table-tr-even-background-color
+				}
+			}
+		}
+	}
+	.wind-virtual-table__scrollBar-container {
+		position:absolute
+		z-index: 20
+		overflow:hidden
+		&.table-scrollBar-y {
+			top:0
+			right:0
+			width:3px
+			height: 100%
+		}
+		&.table-scrollBar-x {
+			bottom:0
+			left:0
+			height:3px
+			width: 100%
+		}
+		.wind-virtual-table__scrollBar {
+			position:absolute
+			background-color:virtual-table-scrollbar-background-color
+			transition: all 0.1s ease-out,opacity 0.3s ease-out
+			border-radius:5px
+			&.table-scrollBar-y {
+				top:0
+				right:0
+				width:3px
+			}
+			&.table-scrollBar-x {
+				bottom:0
+				left:0
+				height:3px
+			}
+		}
+	}
+}

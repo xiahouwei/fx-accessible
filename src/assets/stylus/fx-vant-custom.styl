@@ -1,0 +1,80 @@
+@import './varsty'
+/*品项大小类-强化van-collapse组件样式*/
+.item-edit {
+	.fx-vant-class-collapse {
+		.van-collapse-item__title {
+			.van-cell__title {
+				overflow: hidden !important;
+			}
+		}
+		.van-collapse-item__content {
+			padding:0
+			.small-class {
+				.van-cell__title {
+					overflow: hidden !important;
+					&>span {
+						overflow: hidden;
+						text-overflow : ellipsis
+						white-space: nowrap;
+						display: block;
+						text-indent:10px
+					}
+				}
+			}
+		}
+	}
+}
+/*单据详情order-info内van-collapse,van-tabs组件样式强化*/
+.order-info-block {
+	.van-collapse-item__content {
+		padding-top: 5px;
+		padding-bottom: 5px;
+		.van-tabs--line {
+			padding-top: 24px !important
+		}
+		.van-tabs__wrap {
+			height:24px !important
+			.van-ellipsis {
+				height:24px
+				line-height:24px
+				font-size:12px
+			}
+			&.van-hairline--top-bottom::after {
+				border-width: 0 !important;
+			}
+		}
+	}
+}
+
+/*解决Field组件 input框没有垂直居中问题*/
+.van-cell {
+	align-items: center;
+}
+
+/*单据明细vant折叠组件样式调整*/
+.store-item-content .van-collapse-item__title {
+	padding: 6px 0;
+}
+.store-item-content .van-collapse-item__content {
+	padding: 2px 10px;
+	color: $fxItemTextColor;
+}
+.order-item-block .van-collapse-item__title {
+  padding: 0;
+}
+.order-item-block .van-collapse-item__content {
+  padding: 2px 6px;
+  color: $fxItemTextColor;
+}
+.item-search-block .van-collapse-item__title {
+  padding: 0;
+}
+.item-search-block .van-collapse-item__content {
+  padding: 2px 0px;
+  color: $fxItemTextColor;
+}
+
+/*解决滑块组件边框问题*/
+.van-swipe-cell__right {
+	padding-left: 2px;
+}

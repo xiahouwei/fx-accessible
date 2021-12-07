@@ -1,0 +1,26 @@
+{
+	"data": [{
+		"id": "1",
+		"No": "MDHH123456789",
+		"name": "仓库1",
+		"billState": "1",
+		"date": "2019-04-01",
+		"urgency": true
+	}, {
+		"id": "2",
+		"No": "MDHH123456789",
+		"name": "仓库2",
+		"billState": "2",
+		"date": "2019-04-01",
+		"urgency": false
+	}, {
+		"id": "2",
+		"No": "MDHH123456789",
+		"name": "仓库3",
+		"billState": "1",
+		"date": "2019-04-01",
+		"urgency": true
+	}],
+	"result": true,
+	"message": "成功"
+}

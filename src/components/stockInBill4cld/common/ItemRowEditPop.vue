@@ -1,0 +1,199 @@
+<template>
+	<fx-item-row-edit
+		:title="itemData.goodsDTO.name"
+		@on-back="onConfirmClick"
+	>
+		<van-cell-group>
+			<w-cell title="申购数量">{{itemData.parentAmount ? itemData.parentAmount : 0}}</w-cell>
+			<van-pro-number-field
+				v-model="itemData.price"
+				label="非税单价"
+				input-align="right"
+				min="0"
+				:defaultValue="0"
+				:max="maxAmount"
+				:intLength="numberLength"
+				:pointSize="sysMoneyPointSize"
+				:disabled="isDisabled || !itemData.canChangePriceFlag"
+				@change="onPriceChange"
+				v-show="$fxAuth('stockInBill4cld.canSeeMoney')"
+			></van-pro-number-field>
+			<van-pro-number-field
+				v-model="itemData.noTransMoney"
+				label="不含运费非税金额"
+				input-align="right"
+				min="0"
+				:defaultValue="0"
+				:max="maxAmount"
+				:intLength="numberLength"
+				:pointSize="sysMoneyPointSize"
+				:disabled="isDisabled || !itemData.canChangePriceFlag"
+				@change="onInMoneyChange"
+				v-show="$fxAuth('stockInBill4cld.canSeeMoney')"
+			></van-pro-number-field>
+			<w-cell
+				title="税率"
+				:is-link="!isDisabled"
+				:disabled="isDisabled || !itemData.canChangeTaxFlag"
+				@click="onTaxClick"
+				v-show="$fxAuth('stockInBill4cld.canSeeMoney')"
+			>{{fomatterTaxes(itemData.tax)}}</w-cell>
+			<van-pro-number-field
+				v-model="itemData.taxPrice"
+				label="含税单价"
+				input-align="right"
+				min="0"
+				:defaultValue="0"
+				:max="maxAmount"
+				:intLength="numberLength"
+				:pointSize="sysMoneyPointSize"
+				:disabled="isDisabled || !itemData.canChangePriceFlag"
+				@change="onTaxPriceChange"
+				v-show="$fxAuth('stockInBill4cld.canSeeMoney')"
+			></van-pro-number-field>
+			<van-pro-number-field
+				v-model="itemData.noTransInTaxesMoney"
+				label="不含运费含税金额"
+				input-align="right"
+				min="0"
+				:defaultValue="0"
+				:max="maxAmount"
+				:intLength="numberLength"
+				:pointSize="sysMoneyPointSize"
+				:disabled="isDisabled || !itemData.canChangePriceFlag"
+				@change="onTaxInMoneyChange"
+				v-show="$fxAuth('stockInBill4cld.canSeeMoney')"
+			></van-pro-number-field>
+			<w-cell title="非税金额" v-show="$fxAuth('stockInBill4cld.canSeeMoney')">{{itemData.inMoney}}</w-cell>
+			<w-cell title="含税金额" v-show="$fxAuth('stockInBill4cld.canSeeMoney')">{{itemData.inMoneyWithTax}}</w-cell>
+			<w-cell title="税额" v-show="$fxAuth('stockInBill4cld.canSeeMoney')">{{itemData.taxInMoney}}</w-cell>
+			<w-cell title="订单数量">{{itemData.inBusPlanAmount || 0}}</w-cell>
+			<w-cell title="订单单价" v-show="$fxAuth('stockInBill4cld.canSeeMoney')">{{itemData.inPlanPrice || 0}}</w-cell>
+			<w-cell title="品项编号">{{itemData.goodsDTO.code}}</w-cell>
+			<w-cell title="赠送">
+				<w-switch
+					v-model="itemData.giftFlag"
+					:disabled="isDisabled"
+					type="normal"
+					@change="changeGiftFlag"
+				></w-switch>
+			</w-cell>
+			<w-cell title="运费金额" v-show="$fxAuth('stockInBill4cld.canSeeMoney')">{{itemData.transMoney}}</w-cell>
+			<van-pro-field
+				ref="memo"
+				v-model="itemData.memo"
+				:placeholder="setPlaceholder('请输入备注')"
+				:disabled="isDisabled"
+				label="备注"
+				input-align="right"
+				@focus="onFocus('memo')"
+			/>
+		</van-cell-group>
+		<w-button
+			slot="bottom-btn"
+			v-if="!isDisabled"
+			size="large"
+			type="primary"
+			@click="onConfirmClick"
+		>保存
+		</w-button>
+		<taxesActionSheet
+			v-model="taxesActionShow"
+			:sync="true"
+			@on-taxes-select="onTaxesSelect"
+		></taxesActionSheet>
+	</fx-item-row-edit>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+import taxesActionSheet from '@/components/common/taxesActionSheet.vue'
+export default {
+	name: 'itemRowEdit',
+	components: {
+		taxesActionSheet
+	},
+	props: {
+		visibleFlag: Boolean,
+		itemData: {
+			type: Object,
+			default: () => {
+				return {}
+			}
+		},
+		isDisabled: Boolean
+	},
+	data () {
+		return {
+			taxesActionShow: false
+		}
+	},
+	computed: {
+		...mapState({
+			sysMoneyPointSize: 'sysMoneyPointSize',
+			numberLength: 'numberLength',
+			maxAmount: 'maxAmount'
+		}),
+		fomatterTaxes (value) {
+			return (value) => {
+				if (value) {
+					return `${value}%`
+				} else {
+					return '0%'
+				}
+			}
+		},
+		setPlaceholder (val) {
+			return (val) => {
+				return this.isDisabled ? '' : val
+			}
+		}
+	},
+	methods: {
+		onCloseClick () {
+			this.$emit('update:visibleFlag', false)
+		},
+		onConfirmClick () {
+			if (this.itemData.id) {
+				this.itemData.changeType = 'edit'
+			}
+			this.$emit('on-Confirm', this.itemData)
+			this.$emit('update:visibleFlag', false)
+		},
+		onFocus (ref) {
+			this.$fxUtils.doScrollTop(this.$refs[ref].$el)
+		},
+		changeGiftFlag (val) {
+			this.$fxCalculation('stockInBill4cld').giftChange(this.itemData)
+		},
+		onPriceChange () {
+			this.$fxCalculation('stockInBill4cld').changePrice(this.itemData)
+		},
+		onInMoneyChange () {
+			this.$fxCalculation('stockInBill4cld').changeMoney(this.itemData)
+		},
+		onTaxPriceChange () {
+			this.$fxCalculation('stockInBill4cld').changePriceWithTax(this.itemData)
+		},
+		onTaxInMoneyChange () {
+			this.$fxCalculation('stockInBill4cld').changeMoneyWithTax(this.itemData)
+		},
+		onTaxClick () {
+			this.taxesActionShow = true
+		},
+		onTaxesSelect (item) {
+			this.itemData.tax = this.$fxUtils.toFixedParseNumber(item.tax * 100, 2, false)
+			this.$fxCalculation('stockInBill4cld').changeTaxes(this.itemData)
+			this.taxesActionShow = false
+		},
+		onBatchCodeClear () {
+			this.itemData.batchCode = ''
+		}
+	}
+}
+</script>
+<style lang="stylus" scoped>
+.van-field__label{
+	max-width: 30vw;
+}
+</style>

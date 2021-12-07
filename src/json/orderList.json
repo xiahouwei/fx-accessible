@@ -1,0 +1,195 @@
+{
+	"data": [{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	},{
+		"id": "1",
+		"sysbillCode": "MDHH123456789",
+		"name": "天津南开大悦城店",
+		"billState": 1,
+		"arriveDate": 1555393293000,
+		"urgency": true,
+		"shopDTO": {
+			"name":"宁夏"
+		}
+	}],
+	"result": true,
+	"message": "成功"
+}

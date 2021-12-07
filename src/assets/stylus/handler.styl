@@ -1,0 +1,31 @@
+/*stylus functions*/
+
+$fontNormal = {
+    name: normal,
+    value: 1
+}
+$fontBig = {
+    name: big,
+    value: 1.4
+}
+$fontLarge = {
+    name: large,
+    value: 1.6
+}
+$fontSizeMapping = ($fontNormal $fontBig $fontLarge)
+
+/*动态生成字体大小 by shw*/
+$fx-dynamic-font-size(size, level = 0)
+    if (level == 1)
+        font-size: size * $fontNormal[value] !important
+    else
+        font-size: size * $fontNormal[value]
+    for item in $fontSizeMapping
+        if (level == 1)
+            [data-font-size-type = { item[name] }] & {
+                font-size: size * item[value] !important
+            }
+        else
+            [data-font-size-type = { item[name] }] & {
+                font-size: size * item[value]
+            }
