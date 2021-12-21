@@ -238,6 +238,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .inteledi-login {
+	background-color: blue
 	.login-container {
 		flex:1
 		.login-welcome {
